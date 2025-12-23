@@ -84,5 +84,7 @@ void afficher_etudiants(Gestion_des_Etudians tab[], int n)
 
 int calculer_age(Gestion_des_Etudians e)
 {
-    
+    time_t t = time(NULL);
+    struct tm tm = *localtime(&t);
+    printf("Age : %d ans\n", tm.tm_year + 1900 - e.annee);
 }
