@@ -32,13 +32,10 @@ typedef struct
 
 void menu();
 
-void enregistrer_etudiant(Gestion_des_Etudians *e);
 void ajouter_etudiant(Gestion_des_Etudians tab[], int *n);
 void modifier_etudiant(Gestion_des_Etudians tab[], int n);
 void supprimer_etudiant(Gestion_des_Etudians tab[], int *n);
-
 void afficher_etudiants(Gestion_des_Etudians tab[], int n);
-
 void trier_par_nom(Gestion_des_Etudians tab[], int n);
 void trier_par_filiere(Gestion_des_Etudians tab[], int n);
 

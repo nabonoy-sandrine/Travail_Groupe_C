@@ -2,73 +2,81 @@
 
 #include "etudiant.h"
 #include <string.h>
+#include <stdio.h>
+#include <stdlib.h>
+
 
 int main()
 {
     Gestion_des_Etudians etudiants[MAX];
-    int n, choix, pos;
-    char mat[15];
-
-    printf("Entrer le nombre initial d'etudiants : ");
-    scanf("%d", &n);
-
-    for (int i = 0; i < n; i++)
-        enregistrer_etudiant(&etudiants[i]);
+    int n = 0;
+    int choix;
 
     do
     {
-        menu_beau();
+        menu();
         scanf("%d", &choix);
 
         switch (choix)
         {
-        case 1:
-            ajouter_etudiant(etudiants, &n);
-            break;
+            case 1:
+                ajouter_etudiant(etudiants, &n);
+                break;
 
-        case 2:
-            modifier_etudiant(etudiants, n);
-            break;
+            case 2:
+                /* Modifier un étudiant */
+                break;
 
-        case 3:
-            trier_par_nom(etudiants, n);
-            printf("Matricule à rechercher : ");
-            scanf("%s", mat);
-            pos = rechercher_etudiant(etudiants, n, mat);
-            if (pos != -1)
-                printf(" Étudiant trouvé : %s %s\n",
-                       etudiants[pos].nom,
-                       etudiants[pos].prenom);
-            else
-                printf(" Étudiant non trouvé\n");
-            break;
+            case 3:
+                /* Rechercher un étudiant (dichotomie) */
+                break;
 
-        case 4:
-            supprimer_etudiant(etudiants, &n);
-            break;
+            case 4:
+                /* Supprimer un étudiant */
+                break;
 
-        case 5:
-            trier_par_nom(etudiants, n);
-            printf(" Tri par nom effectué\n");
+            case 5:
+                if (n < 2){
+                  printf("Impossible de trier : moins de 2 etudiants.\n");
+                }
+                else{
+                  trier_par_nom(etudiants, n);
+                  printf("Tri par nom effectue.\n");
+                  afficher_etudiants(etudiants, n);
+              }
             break;
+            case 6:
+                char mat[20];
+                int pos;
 
-        case 6:
-            printf("Matricule : ");
-            scanf("%s", mat);
-            for (int i = 0; i < n; i++)
-                if (strcmp(etudiants[i].matricule, mat) == 0)
-                    printf(" Âge : %d ans\n", calculer_age(etudiants[i]));
-            break;
+                printf("Entrer le matricule : ");
+                scanf("%s", mat);
 
-        case 7:
-            trier_par_filiere(etudiants, n);
-            printf(" Tri par filière effectué\n");
-            break;
+                pos = rechercher_etudiant(etudiants, n, mat);
 
-        case 8:
-            afficher_etudiants(etudiants, n);
-            break;
+                if (pos == -1)
+                  printf("Etudiant non trouve.\n");
+               else
+                  printf("Age : %d ans\n", calculer_age(etudiants[pos]));
+
+               break;
+            case 7:
+               trier_par_filiere(etudiants, n);
+               printf("Tri par filiere effectue.\n");
+               break;
+
+            case 8:
+                 afficher_etudiants(etudiants, n);
+                 break;
+
+            case 0:
+                printf("Fin du programme.\n");
+                break;
+
+            default:
+                printf("Choix invalide !\n");
         }
+
     } while (choix != 0);
 
     return 0;
