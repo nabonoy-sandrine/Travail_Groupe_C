@@ -135,13 +135,90 @@ int rechercher_etudiant(Gestion_des_Etudians tab[], int n, char mat[])
 
 void modifier_etudiant(Gestion_des_Etudians tab[], int n)
 {
-    
+    char matricule[10];
+    int i;
+    int trouve = 0;
+
+    printf("Entrez le matricule de l'etudiant a modifier : ");
+    scanf("%s", matricule);
+
+    for (i = 0; i < n; i++)
+    {
+        if (strcmp(tab[i].matricule, matricule) == 0)
+        {
+            printf("\n--- Modification de l'etudiant ---\n");
+
+            printf("Nom : ");
+            scanf("%s", tab[i].nom);
+
+            printf("Prenom : ");
+            scanf("%s", tab[i].prenom);
+
+            printf("Date de naissance (JJ MM AAAA) : ");
+            scanf("%d %d %d",
+                  &tab[i].date_naissance.jour,
+                  &tab[i].date_naissance.mois,
+                  &tab[i].date_naissance.annee);
+
+            do{
+              printf("Sexe (M/F) : ");
+              scanf(" %c", &tab[i].sexe);
+
+              if (tab[i].sexe != 'M' && tab[i].sexe != 'm' && tab[i].sexe != 'F' && tab[i].sexe != 'f'){
+                 printf("Erreur : vous devez entrer M ou F uniquement.\n");
+              }
+            } while (tab[i].sexe != 'M' && tab[i].sexe != 'm' && tab[i].sexe != 'F' && tab[i].sexe != 'f');
+
+            printf("Departement : ");
+            scanf("%s", tab[i].departement);
+
+            printf("Filiere : ");
+            scanf("%s", tab[i].filiere);
+
+            printf("Region d'origine : ");
+            scanf("%s", tab[i].region_origine);
+
+            trouve = 1;
+        }
+    }
+
+    if (!trouve)
+    {
+        printf("\nEtudiant non trouve.\n");
+    }
 }
 
 /* ========= SUPPRESSION ========= */
 
 void supprimer_etudiant(Gestion_des_Etudians tab[], int *n)
 {
+
+    char matricule[10];
+    int i, j;
+    int trouve = 0;
+
+    printf("Entrez le matricule de l'etudiant a supprimer : ");
+    scanf("%s", matricule);
+
+    for (i = 0; i < *n; i++)
+    {
+        if (strcmp(tab[i].matricule, matricule) == 0)
+        {
+            for (j = i; j < *n - 1; j++)
+            {
+                tab[j] = tab[j + 1];
+            }
+            (*n)--;
+            trouve = 1;
+            printf("\nEtudiant supprime avec succes.\n");
+            break;
+        }
+    }
+
+    if (!trouve)
+    {
+        printf("\nEtudiant non trouve.\n");
+    }
     
 }
 
