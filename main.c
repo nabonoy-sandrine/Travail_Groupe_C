@@ -11,6 +11,9 @@ int main()
     Gestion_des_Etudians etudiants[MAX];
     int n = 0;
     int choix;
+    char mat[20];
+    int pos;
+
 
     do
     {
@@ -24,16 +27,62 @@ int main()
                 break;
 
             case 2:
-                /* Modifier un étudiant */
-                break;
+               if (n == 0)
+               {
+                 printf("Aucun etudiant enregistre.\n");
+               }
+               else
+              {
+                modifier_etudiant(etudiants, n);
+              }
+              break;
+
 
             case 3:
-                /* Rechercher un étudiant (dichotomie) */
-                break;
+                if (n == 0)
+                {
+                   printf("Aucun etudiant enregistre.\n");
+                       break;
+                }
+
+              printf("Entrer le matricule a rechercher : ");
+              scanf("%s", mat);
+
+              pos = rechercher_etudiant(etudiants, n, mat);
+
+              if (pos == -1)
+              {
+                printf(" Etudiant non trouve.\n");
+              }
+              else
+             {
+                printf("Etudiant trouve :\n");
+                printf("\nEtudiant %d\n", pos + 1);
+                printf("Matricule        : %s\n", etudiants[pos].matricule);
+                printf("Nom              : %s\n", etudiants[pos].nom);
+                printf("Prenom           : %s\n", etudiants[pos].prenom);
+                printf("Date de naissance: %02d/%02d/%04d\n",
+                  etudiants[pos].date_naissance.jour,
+                  etudiants[pos].date_naissance.mois,
+                  etudiants[pos].date_naissance.annee);
+                printf("Sexe             : %c\n", etudiants[pos].sexe);
+                printf("Departement      : %s\n", etudiants[pos].departement);
+                printf("Filiere          : %s\n", etudiants[pos].filiere);
+                printf("Region d'origine : %s\n", etudiants[pos].region_origine);
+             }
+             break;
 
             case 4:
-                /* Supprimer un étudiant */
-                break;
+              if (n == 0)
+              {
+                printf("Aucun etudiant enregistre.\n");
+              }
+              else
+              {
+                supprimer_etudiant(etudiants, &n);
+              }
+              break;
+
 
             case 5:
                 if (n < 2){
@@ -46,9 +95,6 @@ int main()
               }
             break;
             case 6:
-                char mat[20];
-                int pos;
-
                 printf("Entrer le matricule : ");
                 scanf("%s", mat);
 
