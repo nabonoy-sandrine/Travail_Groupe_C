@@ -29,12 +29,11 @@ void menu()
 }
 
 /* ===== ENREGISTRER PLUSIEURS ETUDIANTS ===== */
-/* Cette fonction correspond AU CASE 1 DU MENU */
 
 void ajouter_etudiant(Gestion_des_Etudians tab[], int *n)
 {
-    int nb;
-    int i;
+    int nb, i, j;
+    int existe;
 
     printf("Combien d'etudiants voulez-vous enregistrer ? ");
     scanf("%d", &nb);
@@ -49,8 +48,27 @@ void ajouter_etudiant(Gestion_des_Etudians tab[], int *n)
     {
         printf("\n--- Etudiant %d ---\n", i + 1);
 
-        printf("Matricule : ");
-        scanf("%s", tab[*n].matricule);
+        /* ===== Matricule (UNIQUE) ===== */
+        do
+        {
+            existe = 0;
+
+            printf("Matricule : ");
+            scanf("%s", tab[*n].matricule);
+
+            for (j = 0; j < *n; j++)
+            {
+                if (strcmp(tab[j].matricule, tab[*n].matricule) == 0)
+                {
+                    existe = 1;
+                    printf("Erreur : ce matricule existe deja. Entrez un autre.\n");
+                    break;
+                }
+            }
+
+        } while (existe);
+
+        /* ===== Autres informations ===== */
 
         printf("Nom : ");
         scanf("%s", tab[*n].nom);
@@ -64,15 +82,20 @@ void ajouter_etudiant(Gestion_des_Etudians tab[], int *n)
               &tab[*n].date_naissance.mois,
               &tab[*n].date_naissance.annee);
 
-        do{
-          printf("Sexe (M/F) : ");
-          scanf(" %c", &tab[*n].sexe);
+        /* ===== Sexe sécurisé ===== */
+        do
+        {
+            printf("Sexe (M/F) : ");
+            scanf(" %c", &tab[*n].sexe);
 
-          if (tab[*n].sexe != 'M' && tab[*n].sexe != 'm' && tab[*n].sexe != 'F' && tab[*n].sexe != 'f'){
-             printf("Erreur : vous devez entrer M ou F uniquement.\n");
-          }
-        } while (tab[*n].sexe != 'M' && tab[*n].sexe != 'm' && tab[*n].sexe != 'F' && tab[*n].sexe != 'f');
+            if (tab[*n].sexe != 'M' && tab[*n].sexe != 'm' &&
+                tab[*n].sexe != 'F' && tab[*n].sexe != 'f')
+            {
+                printf("Erreur : vous devez entrer M ou F uniquement.\n");
+            }
 
+        } while (tab[*n].sexe != 'M' && tab[*n].sexe != 'm' &&
+                 tab[*n].sexe != 'F' && tab[*n].sexe != 'f');
 
         printf("Departement : ");
         scanf("%s", tab[*n].departement);
@@ -88,6 +111,7 @@ void ajouter_etudiant(Gestion_des_Etudians tab[], int *n)
 
     printf("\n Enregistrement termine avec succes !\n");
 }
+
 
 
 /* ========= TRI ========= */
@@ -106,7 +130,7 @@ void trier_par_nom(Gestion_des_Etudians tab[], int n)
             }
         }
     }
-
+}
 
 void trier_par_filiere(Gestion_des_Etudians tab[], int n)
 {
@@ -122,7 +146,7 @@ void trier_par_filiere(Gestion_des_Etudians tab[], int n)
             }
         }
     }
-
+}
 
 /* ========= RECHERCHE PAR DICHOTOMIE ========= */
 
@@ -222,8 +246,6 @@ void supprimer_etudiant(Gestion_des_Etudians tab[], int *n)
     
 }
 
-/* ========= AFFICHAGE ========= */
-
 void afficher_etudiants(Gestion_des_Etudians tab[], int n)
 {
     int i;
@@ -234,26 +256,31 @@ void afficher_etudiants(Gestion_des_Etudians tab[], int n)
         return;
     }
 
-    printf("\n========== LISTE DES ETUDIANTS ==========\n");
+    printf("\n=====================================================================================================\n");
+    printf(" %-3s | %-10s | %-12s | %-12s | %-10s | %-4s | %-12s | %-12s | %-15s\n",
+           "N°", "MATRICULE", "NOM", "PRENOM", "NAISSANCE", "SEXE",
+           "DEPARTEMENT", "FILIERE", "REGION");
+    printf("=======================================================================================================\n");
 
     for (i = 0; i < n; i++)
     {
-        printf("\nEtudiant %d\n", i + 1);
-        printf("Matricule        : %s\n", tab[i].matricule);
-        printf("Nom              : %s\n", tab[i].nom);
-        printf("Prenom           : %s\n", tab[i].prenom);
-        printf("Date de naissance: %02d/%02d/%04d\n",
+        printf(" %-3d | %-10s | %-12s | %-12s | %02d/%02d/%04d | %-4c | %-12s | %-12s | %-15s\n",
+               i + 1,
+               tab[i].matricule,
+               tab[i].nom,
+               tab[i].prenom,
                tab[i].date_naissance.jour,
                tab[i].date_naissance.mois,
-               tab[i].date_naissance.annee);
-        printf("Sexe             : %c\n", tab[i].sexe);
-        printf("Departement      : %s\n", tab[i].departement);
-        printf("Filiere          : %s\n", tab[i].filiere);
-        printf("Region d'origine : %s\n", tab[i].region_origine);
+               tab[i].date_naissance.annee,
+               tab[i].sexe,
+               tab[i].departement,
+               tab[i].filiere,
+               tab[i].region_origine);
     }
 
-    printf("\n========================================\n");
+    printf("========================================================================================================\n");
 }
+
 
 
 /* ========= AGE ========= */
