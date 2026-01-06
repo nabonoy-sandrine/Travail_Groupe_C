@@ -106,7 +106,7 @@ void trier_par_nom(Gestion_des_Etudians tab[], int n)
             }
         }
     }
-}
+
 
 void trier_par_filiere(Gestion_des_Etudians tab[], int n)
 {
@@ -122,7 +122,7 @@ void trier_par_filiere(Gestion_des_Etudians tab[], int n)
             }
         }
     }
-}
+
 
 /* ========= RECHERCHE PAR DICHOTOMIE ========= */
 
